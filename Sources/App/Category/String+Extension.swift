@@ -9,7 +9,6 @@
 import Crypto
 import Vapor
 import Validation
-
 extension String {
     
     var md5 : String {
