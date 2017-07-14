@@ -49,7 +49,7 @@ class SignController {
 //        if vcode != 456321 {
 //            
 //        }
-        guard let pw = request.data["pw"]?.string else{
+        guard let pw = request.data["password"]?.string else{
             return JSON([
                 code: 1,
                 msg : "缺少密码"
@@ -99,7 +99,7 @@ class SignController {
                 msg : "未注册"
                 ])
         }
-        guard let pw = request.data["pw"]?.string else{
+        guard let pw = request.data["password"]?.string else{
             return JSON([
                 code: 1,
                 msg : "缺少密码"

@@ -19,7 +19,8 @@ let token = v1.grouped(TokenMiddleware())
 
 AccountController().registeredRouting()
 SignController().registeredRouting()
-AccountController().registeredRouting()
+LoadController().registeredRouting()
+UserController().registeredRouting()
 
 
 try drop.run()
