@@ -38,8 +38,19 @@ extension Account: Preparation {
         }
     }
     static func revert(_ database: Database) throws {
-        try database.delete(self)
+
     }
 }
+//添加字段
+//struct addAccountHHHH: Preparation {
+//    static func prepare(_ database: Database) throws {
+//        try database.modify(Account.self, closure: { (bar) in
+//            bar.string("HHHH")
+//        })
+//    }
+//    static func revert(_ database: Database) throws {
+//        
+//    }
+//}
 
 

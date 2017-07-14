@@ -20,5 +20,6 @@ extension Config {
     private func setupPreparations() throws {
         preparations.append(User.self)
         preparations.append(Session.self)
+//        preparations.append(addAccountH.self)
     }
 }
