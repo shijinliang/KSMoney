@@ -45,7 +45,7 @@ class LoadController {
         }
     }
     func download(_ request: Request) throws -> ResponseRepresentable {
-        let iamgeName = try request.parameters.next(String.self)
-        return Response(redirect: "http://47.94.228.120:8080/images/file/\(iamgeName)")
+        let image = try request.parameters.next(String.self)
+        return Response(redirect: "http://47.94.228.120:8080/images/file/\(image)")
     }
 }
