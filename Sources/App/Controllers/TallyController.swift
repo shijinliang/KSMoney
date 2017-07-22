@@ -20,7 +20,7 @@ class TallyController {
         var tallyQuery = try Tally.makeQuery().filter("uuid", user?.uuid)
 
         if let account_id = request.data["account_id"]?.int {
-            tallyQuery = try tallyQuery.filter("account", account_id)
+            tallyQuery = try tallyQuery.filter("account_id", account_id)
         }
 
         var size = 10
@@ -39,7 +39,12 @@ class TallyController {
         return try JSON(node: [
             code: 0,
             msg: "success",
+            "count": [
+                "total":tallys.count,
+            ],
             "tallys": tallys.makeNode(in: nil)
             ])
     }
+
+
 }
