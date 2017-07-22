@@ -27,6 +27,10 @@ final class Tally: Model {
         self.category_id = 1
         self.account_id = 1
     }
+    init(uuid: String) throws {
+        self.uuid = uuid
+    }
+
     init(row: Row) throws {
         uuid = try row.get("uuid")
         category_id = try row.get("category_id")
