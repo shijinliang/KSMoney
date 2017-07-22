@@ -21,7 +21,7 @@ AccountController().registeredRouting()
 SignController().registeredRouting()
 LoadController().registeredRouting()
 UserController().registeredRouting()
-
+TallyController().registeredRouting()
 
 try drop.run()
 
