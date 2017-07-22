@@ -62,12 +62,19 @@ class SignController {
                 ])
         }
         let user = User(phone: phone, pw: pw)
+        let subIndex: String.Index = phone.index(phone.startIndex, offsetBy:7)
+        user.name = phone.substring(from: subIndex)
         try user.save()
         //是否成功注册环信
 //        user.isERegister = eModel.registerUser(user.uuid, passWord: user.password)
         let session = Session(user:user)
+        let tally = Tally()
+        tally.uuid = user.uuid;
+        tally.create_at = user.create_at
+        tally.remark = user.name+"的第一次记账"
         try session.save()
-        try user.save()
+
+        try tally.save()
         user_caches[user.uuid.string] = user
         session_caches[session.token!] = session
         return try JSON(node: [
