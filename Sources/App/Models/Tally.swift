@@ -80,13 +80,24 @@ extension Tally: Preparation {
 extension Tally {
     func makeJSON() throws -> JSON {
         var json = JSON()
+        try json.set("id", id)
         try json.set("uuid", uuid)
-        try json.set("category_id", category_id)
+        //try json.set("category_id", category_id)
+        try json.set("category", getCategory()?.makeJSON())
         try json.set("create_at", create_at)
         try json.set("remark", remark)
         try json.set("out_account_id", out_account_id)
         try json.set("in_account_id", in_account_id)
         try json.set("account_id", account_id)
+        if out_account_id > 0 {
+            try json.set("out_account", getAccount(out_account_id)?.makeJSON())
+        }
+        if in_account_id > 0 {
+            try json.set("in_account", getAccount(in_account_id)?.makeJSON())
+        }
+        if account_id > 0 {
+            try json.set("account", getAccount(account_id)?.makeJSON())
+        }
         try json.set("price", price)
         try json.set("state", state)
         return json
@@ -96,15 +107,45 @@ extension Tally {
 extension Tally: NodeRepresentable {
     func makeNode(in context: Context?) throws -> Node {
         var node = Node(context)
+        try node.set("id", id)
         try node.set("uuid", uuid)
-        try node.set("category_id", category_id)
+        //try node.set("category_id", category_id)
+        try node.set("category", getCategory()?.makeJSON())
         try node.set("create_at", create_at)
         try node.set("remark", remark)
         try node.set("out_account_id", out_account_id)
         try node.set("in_account_id", in_account_id)
-        try node.set("account_id", account_id)
+        try json.set("account_id", account_id)
+        if out_account_id > 0 {
+            try node.set("out_account", getAccount(out_account_id)?.makeJSON())
+        }
+        if in_account_id > 0 {
+            try node.set("in_account", getAccount(in_account_id)?.makeJSON())
+        }
+        if account_id > 0 {
+            try json.set("account", getAccount(account_id)?.makeJSON())
+        }
+
         try node.set("price", price)
         try node.set("state", state)
         return node
+    }
+}
+
+extension Tally {
+    func getCategory() throws -> Category? {
+        if let category = try Category.makeQuery().filter("id", category_id).first() {
+            return category
+        } else {
+            return nil
+        }
+    }
+
+    func getAccount(_ id: Int) throws -> Account? {
+        if let account = try Account.makeQuery().filter("id", id).first() {
+            return account
+        } else {
+            return nil
+        }
     }
 }
