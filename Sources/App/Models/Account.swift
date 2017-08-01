@@ -43,6 +43,20 @@ extension Account: Preparation {
 
     }
 }
+
+extension Account {
+    func makeJSON() throws -> JSON {
+        var json = JSON()
+        try json.set("id", id)
+        try json.set("name", name)
+        try json.set("create_at", create_at)
+        try json.set("image", image)
+        try json.set("image_tag", image_tag)
+        try json.set("type", type)
+        return json
+    }
+}
+
 //添加字段
 //struct addAccountHHHH: Preparation {
 //    static func prepare(_ database: Database) throws {
