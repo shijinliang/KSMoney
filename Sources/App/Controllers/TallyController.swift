@@ -24,7 +24,7 @@ class TallyController {
         var tallys = [Tally]()
         var tallyQuery = try Tally.makeQuery().filter("uuid", user?.uuid)
 
-        if let account_id = request.data["account_id"]?.int {
+        if let account_id = request.data["account_id"]?.int, account_id != 0 {
             tallyQuery = try tallyQuery.filter("account_id", account_id)
         }
 
@@ -36,7 +36,7 @@ class TallyController {
             }
         }
         if let page = request.data["pagenum"]?.int {
-            tallys = try tallyQuery.limit(size, offset: page-1).all()
+            tallys = try tallyQuery.limit(size, offset: (page-1)*size).all()
         } else {
             tallys = try tallyQuery.limit(size, offset: 0).all()
         }
