@@ -60,7 +60,7 @@ class TallyController {
     func getAllTallys(_ request: Request) throws -> ResponseRepresentable {
         var allTallys = [Tally]()
         var allTallyQuery = try Tally.makeQuery();
-        if let account_id = request.data["account_id"]?.int {
+        if let account_id = request.data["account_id"]?.int, account_id != 0 {
             allTallyQuery = try allTallyQuery.filter("account_id", account_id)
         }
 
@@ -71,9 +71,9 @@ class TallyController {
             }
         }
         if let page = request.data["pagenum"]?.int {
-            allTallys = try allTallyQuery.limit(size, offset: page-1).all()
+            tallys = try tallyQuery.limit(size, offset: (page-1)*size).all()
         } else {
-            allTallys = try allTallyQuery.limit(size, offset: 0).all()
+            tallys = try tallyQuery.limit(size, offset: 0).all()
         }
 
         return try JSON(node: [
