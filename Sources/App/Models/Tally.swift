@@ -18,7 +18,7 @@ final class Tally: Model {
     var out_account_id  : Int = 0
     var in_account_id   : Int = 0
     var account_id      : Int = 0
-    var price           : Int = 0
+    var price           : Float = 0.00
     var state           : Int = 0
 
     let storage = Storage()
@@ -68,7 +68,7 @@ extension Tally: Preparation {
             tally.int("out_account_id")
             tally.int("in_account_id")
             tally.int("account_id")
-            tally.int("price")
+            tally.float("price", precision: 2)
             tally.int("state")
         }
     }
@@ -115,7 +115,7 @@ extension Tally: NodeRepresentable {
         try node.set("remark", remark)
         try node.set("out_account_id", out_account_id)
         try node.set("in_account_id", in_account_id)
-        try json.set("account_id", account_id)
+        try node.set("account_id", account_id)
         if out_account_id > 0 {
             try node.set("out_account", getAccount(out_account_id)?.makeJSON())
         }
@@ -123,7 +123,7 @@ extension Tally: NodeRepresentable {
             try node.set("in_account", getAccount(in_account_id)?.makeJSON())
         }
         if account_id > 0 {
-            try json.set("account", getAccount(account_id)?.makeJSON())
+            try node.set("account", getAccount(account_id)?.makeJSON())
         }
 
         try node.set("price", price)

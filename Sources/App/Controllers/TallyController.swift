@@ -71,9 +71,9 @@ class TallyController {
             }
         }
         if let page = request.data["pagenum"]?.int {
-            tallys = try tallyQuery.limit(size, offset: (page-1)*size).all()
+            allTallys = try allTallyQuery.limit(size, offset: (page-1)*size).all()
         } else {
-            tallys = try tallyQuery.limit(size, offset: 0).all()
+            allTallys = try allTallyQuery.limit(size, offset: 0).all()
         }
 
         return try JSON(node: [
