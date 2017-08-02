@@ -15,8 +15,12 @@ let api   = drop.grouped("api")
 let v1    = api.grouped("v1")
 let token = v1.grouped(TokenMiddleware())
 
+//MARK: 🐔Practice 
+let hc = HelloController()
+drop.get("hello", handler: hc.sayHello)
+drop.get("hello", String.parameter, handler: hc.sayHelloAlternate)
 
-
+//MARK: 🐔 API 接口
 AccountController().registeredRouting()
 SignController().registeredRouting()
 LoadController().registeredRouting()
