@@ -18,7 +18,7 @@ class AccountController {
         
         let user = request.user()
         
-        let accounts = try Account.makeQuery().filter("uuid", user?.uuid).first()
+        let accounts = try Account.makeQuery().filter("uuid", user?.uuid).all()
         
         
         return try JSON(node: [
