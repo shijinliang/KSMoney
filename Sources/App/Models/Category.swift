@@ -17,18 +17,26 @@ final class Category:Model {
     var create_at   : Int = 0
     var parent_id   : Int = 0
     var parent_name : String = ""
-
+    var uuid        : String = ""
+    
     init(row: Row) throws {
         try name = row.get("name")
         try create_at = row.get("create_at")
         try parent_id = row.get("parent_id")
+        try uuid = row.get("uuid")
     }
-
+    init(uuid: String) {
+        self.uuid = uuid
+    }
+    init(time: Int) {
+        self.create_at = time
+    }
     func makeRow() throws -> Row {
         var row = Row()
         try row.set("name", name);
         try row.set("create_at", create_at)
         try row.set("parent_id", parent_id)
+        try row.set("uuid", uuid)
         return row;
     }
 }
@@ -41,6 +49,7 @@ extension Category : Preparation {
             category.string("name")
             category.int("create_at")
             category.int("parent_id")
+            category.string("uuid")
         })
 
     }
@@ -56,6 +65,7 @@ extension Category {
         try json.set("name", name)
         try json.set("create_at", create_at)
         try json.set("parent_id", parent_id)
+        try json.set("uuid", uuid)
 
         if parent_id == 0 {
             try json.set("parent_name", "")
@@ -63,6 +73,22 @@ extension Category {
             try json.set("parent_name", self.getName())
         }
         return json
+    }
+}
+extension Category: NodeRepresentable {
+    func makeNode(in context: Context?) throws -> Node {
+        var node = Node(context)
+        try node.set("id", id)
+        try node.set("name", name)
+        try node.set("create_at", create_at)
+        try node.set("parent_id", parent_id)
+        //try node.set("uuid", uuid)
+        if parent_id == 0 {
+            try node.set("parent_name", "")
+        } else {
+            try node.set("parent_name", self.getName())
+        }
+        return node
     }
 }
 
