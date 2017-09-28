@@ -26,6 +26,9 @@ final class Account: Model{
         uuid = try row.get("uuid")
         balance = try row.get("balance")
     }
+    init(uuid: String) {
+        self.uuid = uuid
+    }
     func makeRow() throws -> Row {
         var row = Row()
         try row.set("name", name)
